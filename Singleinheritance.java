@@ -31,7 +31,7 @@ System.out.println("\n RESULT");
 System.out.println("\n *****");
 System.out.println("\n\tName:"+name);
 System.out.println("\n\tID:"+id);
-System.out.println("\n\tDepartment:"+dept);
+System.out.println("\n\tDepartment:"+dept); 
 System.out.println("\n\tMark1:"+m1);
 System.out.println("\n\tMark2:"+m2);
 System.out.println("\n\tMark3:"+m3);
