@@ -1,0 +1,124 @@
+public interface Student1      //create this interface as separate java file e.g Student1.java
+{
+	public void getid();
+	public void getname();
+}
+
+
+
+public class Details implements Student1     //create this class(Details) as separate java file e.g Details.java 
+{
+	String name;
+	int id;
+	Details(String n,int i)
+	{
+	name=n;
+	id=i;
+	}
+	
+	public void getid()         
+	{
+	System.out.println("Id "+id);
+	}
+	public void getname()
+	{
+	   System.out.println("Name "+name);
+	}
+}
+
+
+
+public class Marks                               //create this class(Marks) as separate java file e.g Marks.java
+{
+	int m1,m2,m3,tot;
+	float avg;
+	Marks(int mark1, int mark2, int mark3)
+	{
+		m1=mark1;
+		m2=mark2;
+		m3=mark3;
+	
+	System.out.println("Mark1 "+m1);
+	System.out.println("Mark2 "+m2);
+	System.out.println("Mark3 "+m3);
+	}
+	public void gettotal()
+	{
+		tot=m1+m2+m3;
+		System.out.println("Total "+tot);
+	}
+	public void getaverage()
+	{
+		avg=tot/3;
+		System.out.println("Average "+avg);
+	}
+}
+
+
+
+import java.io.*;                 //create this main class (StudentDetails) as separate java file and compile this main class 
+import java.util.*;
+class StudentDetails implements Student1
+{
+	Marks mark;
+	public StudentDetails(Marks mark)
+	{
+		this.mark=mark;
+	}
+	public void getid()
+	{
+		mark.gettotal();
+	}
+	public void getname()
+	{
+		mark.getaverage();
+		if(mark.avg>=90)
+		System.out.println("Grade A ");
+		
+		else if(mark.avg>=70)
+		   System.out.println("Grade B");
+
+		else if(mark.avg>=50)
+		   System.out.println("Grade c");
+
+		else if(mark.avg>=35)
+		   System.out.println("Grade d");
+
+		else
+		   System.out.println("Failed");
+	}
+}
+class AdapterDesignPattern
+{
+	public static void main(String args[])throws IOException
+	{
+	DataInputStream ds=new DataInputStream(System.in);
+	
+	System.out.println("Enter the name ");
+		String name = ds.readLine();
+	System.out.println("Enter id ");
+		int id=Integer.parseInt(ds.readLine());
+
+	System.out.println("Enter Department ");
+		String dept=ds.readLine();
+
+	System.out.println("Enter mark1 ");
+		int m1=Integer.parseInt(ds.readLine());
+
+	System.out.println("Enter mark2 ");
+		int m2=Integer.parseInt(ds.readLine());
+
+	System.out.println("Enter mark3 ");
+		int m3=Integer.parseInt(ds.readLine());
+
+	Details d=new Details(name,id);
+	d.getid();
+	d.getname();
+	Marks m=new Marks(m1,m2,m3);
+	m.gettotal();
+	m.getaverage();
+	StudentDetails sd=new StudentDetails(m);
+	sd.getid();
+	sd.getname();
+	}
+}
