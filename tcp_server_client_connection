@@ -1,0 +1,80 @@
+import java.io.*;
+import java.net.*;
+import java.lang.*;
+public class server1              // server1.java
+{
+    public static void main(String args[])throws Exception
+    {
+       ServerSocket ssocket;
+       Socket sock;
+
+       BufferedReader sreq;
+       PrintWriter sres;
+       DataInputStream din=new DataInputStream(System.in);
+
+       ssocket=new ServerSocket(1515);
+       System.out.println("Listen for client connection");
+       sock=ssocket.accept();
+       System.out.println("Client connected....");
+ 
+       sreq=new BufferedReader(new InputStreamReader(sock.getInputStream()));
+       sres=new PrintWriter(new OutputStreamWriter(sock.getOutputStream()));
+ 
+        sres.println("Welcome to My Site");
+        sres.flush();     
+
+        String str=sreq.readLine();
+        System.out.println(str);
+
+        while(!str.equals("Bye"))
+        {
+        sres.println(din.readLine());
+        sres.flush();       
+        str=sreq.readLine();
+        System.out.println(str);        
+        }   
+     
+     }
+}
+
+
+
+
+
+
+
+
+
+import java.io.*;          //client1.java
+import java.net.*;
+import java.lang.*;
+ public class client1
+{
+    public static void main(String args[])throws Exception
+    {
+
+         Socket csock;
+
+       BufferedReader creq;
+       PrintWriter cres;
+        
+       DataInputStream din=new DataInputStream(System.in);
+
+         System.out.println("Connecting to..."+InetAddress.getByName("localhost"));         
+         csock=new Socket("LOCALHOST",1515);
+
+        creq=new BufferedReader(new InputStreamReader(csock.getInputStream()));
+        cres=new PrintWriter(new OutputStreamWriter(csock.getOutputStream()));
+
+        String str=creq.readLine();
+        System.out.println(str);
+
+        while(!str.equals("Bye"))
+        {
+        cres.println(din.readLine());
+        cres.flush();       
+        str=creq.readLine();
+        System.out.println(str);        
+        }   
+    }
+}
