@@ -1,0 +1,148 @@
+import java.awt.*;   //jdbc update make a separate file updatejdbc2.java
+import java.awt.event.*;
+import java.sql.*;
+public class updatejdbc2 extends Frame implements ActionListener
+{
+Label l1,l2;
+TextField t1,t2;
+Button b1,b2;
+Statement s1;
+public updatejdbc2()
+{
+l1=new Label("Regno");
+l2=new Label("Name");
+t1=new TextField();
+t2=new TextField();
+b1=new Button("Update");
+b2=new Button("Cancel");
+add(l1);
+add(l2);
+add(t1);
+add(t2);
+add(b1);
+add(b2);
+setLayout(null);
+l1.setBounds(50,100,100,25);
+l2.setBounds(50,150,100,25);
+t1.setBounds(150,100,100,25);
+t2.setBounds(150,150,100,25);
+b1.setBounds(150,200,75,25);
+b2.setBounds(225,200,75,25);
+try
+{
+Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+Connection con=DriverManager.getConnection("Jdbc:Odbc:b1");
+s1=con.createStatement();
+}
+catch(Exception ee)
+{
+System.out.println("path failed");
+}
+b1.addActionListener(this);
+b2.addActionListener(this);
+}
+public void actionPerformed(ActionEvent ee)
+{
+if(ee.getSource()==b1)
+{
+try
+{
+int ii=Integer.parseInt(t1.getText().trim());
+String ss=t2.getText().trim();
+s1.executeUpdate("Update Table1 set Name='"+ss+"' where Regno="+ii+""); 
+t1.setText(" ");
+t2.setText(" ");
+}
+catch(Exception ee1)
+{
+System.out.println("Record not Updated");
+}
+}
+else
+{
+t1.setText(" ");
+t2.setText(" ");
+}
+}
+public static void main(String args[])
+{
+updatejdbc2 jj=new updatejdbc2();
+jj.show();
+jj.setSize(400,400);
+jj.setLocation(100,100);
+}
+}
+
+
+
+
+
+
+import java.awt.*;                //jdbc delete operation make a separate file deljdbc4.java
+import java.awt.event.*;
+import java.sql.*;
+public class deljdbc4 extends Frame implements ActionListener
+{
+Label l1;
+TextField t1;
+Button b1,b2;
+Statement s1;
+public deljdbc4()
+{
+l1=new Label("Regno");
+t1=new TextField(10);
+b1=new Button("Delete");
+b2=new Button("Cancel");
+add(l1);
+add(t1);   
+add(b1);
+add(b2);
+setLayout(null);
+l1.setBounds(50,100,100,25);
+t1.setBounds(150,100,100,25);
+b1.setBounds(150,200,75,25);
+b2.setBounds(225,200,75,25);
+try
+{
+Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+Connection con=DriverManager.getConnection("Jdbc:Odbc:b1");
+System.out.println("Connected");
+s1=con.createStatement();
+}
+catch(Exception ee)
+{
+System.out.println("error"+ee);
+}
+b1.addActionListener(this);
+b2.addActionListener(this);
+}
+public void actionPerformed(ActionEvent ee)
+{
+if(ee.getSource()==b1)
+{
+int ii=Integer.parseInt(t1.getText().trim());
+String ss=t1.getText().trim();
+try
+{
+s1.executeUpdate("Delete from Table1 where Regno="+ii+"");
+System.out.println("Record Deleted");
+t1.setText(" ");
+}
+catch(Exception ee1)
+{
+System.out.println("Record not Deleted"+ee1);
+}
+}
+else
+{
+t1.setText(" ");
+}
+}
+public static void main(String args[])
+{
+deljdbc4 jj=new deljdbc4();
+jj.show();
+jj.setSize(400,400);
+jj.setLocation(100,100);
+}
+}
