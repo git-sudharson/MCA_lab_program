@@ -1,0 +1,76 @@
+import java.net.*;
+import java.io.*;
+class DatagramServer
+{
+ public static DatagramSocket ds;
+ public static int clientport = 1789,serverport=1790;
+ public static void main(String a[]) throws Exception
+ {
+     byte buffer[]=new byte[80];
+     byte buffer1[] = new byte[80];
+     ds=new DatagramSocket(serverport);
+     BufferedReader dis=new BufferedReader(new InputStreamReader(System.in));
+     System.out.println("Server waiting for input");
+     InetAddress ia=InetAddress.getByName("localhost");//localhost;
+
+  while(true)
+        {
+	String s=dis.readLine();
+	if ((s==null) || (s.equals("end")))
+	   break;
+	buffer=s.getBytes();
+	ds.send(new DatagramPacket(buffer,s.length(),ia,clientport));
+        DatagramPacket p=new DatagramPacket(buffer1,buffer1.length);
+	ds.receive(p);
+	String psx = new String(p.getData(),0,p.getLength());	
+	System.out.println(psx);
+	}
+		
+ }	
+}
+
+
+
+
+
+
+import java.net.*;                      
+import java.net.InetAddress;
+import java.io.*;
+class DatagramClient
+{
+	public static DatagramSocket ds;
+	public static byte buffer[]=new byte[80];
+                 public static byte buffer1[] = new byte[80];
+	public static int clientport = 1789, serverport = 1790;
+	public static void main(String a[]) throws Exception
+	{
+		ds=new DatagramSocket(clientport);
+		System.out.println("Client is waiting for server to send data");
+		System.out.println("Press ctrl c to come to dos prompt");
+		InetAddress ia =InetAddress.getByName("LocalHost");//LocalHost();
+		BufferedReader dis = new BufferedReader(new InputStreamReader(System.in));
+	while(true)
+		{
+		DatagramPacket p=new DatagramPacket(buffer,buffer.length);
+	try
+	    {   
+		    ds.setSoTimeout(10000);
+		    ds.receive(p);
+		    String psx = new String(p.getData(),0,p.getLength());
+		    System.out.println(psx);
+		    String s=dis.readLine();
+	
+		    if ((s==null) || (s.equals("end")))
+	                        System.exit(0);
+		    buffer1=s.getBytes();
+	                     ds.send(new DatagramPacket(buffer1,s.length(),ia,serverport));
+		}
+	  catch(InterruptedIOException iee)
+		  {
+                           System.out.println("Server not found");
+	                   System.exit(0);
+		 }
+                 }
+       }	
+}
