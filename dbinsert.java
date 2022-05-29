@@ -26,7 +26,7 @@ l1.setBounds(50,100,100,25);
 l2.setBounds(50,150,100,25);
 t1.setBounds(150,100,100,25);
 t2.setBounds(150,150,100,25);
-B1.setBounds(150,200,75,25);
+B1.setBounds(150,200,75,25); 
 B2.setBounds(225,200,75,25);
 try
 {
